@@ -1,6 +1,7 @@
 local STI = require("sti")
 
 require("player")
+require("cannon")
 require("gui")
 
 
@@ -12,7 +13,7 @@ function love.load()
     Map.layers.solid.visible = false
     Time = 0
 
-    love.graphics.setBackgroundColor(0, 191 / 255, 1) -- Deep sky blue
+    love.graphics.setBackgroundColor(0/255, 191/255, 255/255) -- Deep sky blue
 
     Player:load()
     GUI:load()
@@ -22,6 +23,7 @@ end
 function love.update(dt)
     World:update(dt)
     Player:update(dt)
+    Cannon:update(dt)
     GUI:update()
     UpdateTimer(dt)
 end
