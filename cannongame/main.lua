@@ -1,4 +1,5 @@
 local STI = require("sti")
+local mapFile = require("map.map")
 
 require("player")
 require("cannon")
@@ -11,11 +12,14 @@ function love.load()
     World:setCallbacks(BeginContact, EndContact)
     Map:box2d_init(World)
     Map.layers.solid.visible = false
+    MapWidth = mapFile.layers[2].objects[1].width
+    MapHeight = mapFile.layers[2].objects[2].height
     Time = 0
 
     love.graphics.setBackgroundColor(0/255, 191/255, 255/255) -- Deep sky blue
 
     Player:load()
+    -- Cannon:load()
     GUI:load()
 end
 
@@ -23,7 +27,7 @@ end
 function love.update(dt)
     World:update(dt)
     Player:update(dt)
-    Cannon:update(dt)
+    -- Cannon:update(dt, MapWidth, MapHeight)
     GUI:update()
     UpdateTimer(dt)
 end
