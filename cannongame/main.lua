@@ -1,9 +1,9 @@
 local STI = require("sti")
 local mapFile = require("map.map")
 
+require("time")
 require("player")
-require("cannon")
-require("gui")
+require("cannonball")
 
 
 function love.load()
@@ -14,31 +14,29 @@ function love.load()
     Map.layers.solid.visible = false
     MapWidth = mapFile.layers[2].objects[1].width
     MapHeight = mapFile.layers[2].objects[2].height
-    Time = 0
 
     love.graphics.setBackgroundColor(0/255, 191/255, 255/255) -- Deep sky blue
 
+    Time:load()
     Player:load()
-    Cannon:load()
-    GUI:load()
+    Cannonball:load()
 end
 
 
 function love.update(dt)
     World:update(dt)
+    Time:update(dt)
     Player:update(dt)
-    Cannon:update(dt)
-    GUI:update()
-    UpdateTimer(dt)
+    Cannonball:update(dt)
 end
 
 
 function love.draw()
     love.graphics.setColor(1, 1, 1)
     Map:draw(0, 0, 1, 1)
+    Time:draw()
     Player:draw()
-    Cannon:draw()
-    GUI:draw(Time)
+    Cannonball:draw()
 end
 
 
@@ -48,16 +46,12 @@ end
 
 
 function BeginContact(a, b, collision)
+    Cannonball:beginContact(a, b, collision)
     Player:beginContact(a, b, collision)
 end
 
 function EndContact(a, b, collision)
     Player:endContact(a, b, collision)
-end
-
-
-function UpdateTimer(dt)
-    Time = Time + dt
 end
 
 
