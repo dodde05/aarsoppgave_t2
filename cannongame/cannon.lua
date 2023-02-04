@@ -28,27 +28,33 @@ function Cannon:load()
         instance.physics.body:setFixedRotation(true)
         instance.physics.shape = love.physics.newCircleShape(Cannon.ballRadius)
         instance.physics.fixture = love.physics.newFixture(instance.physics.body, instance.physics.shape)
+        instance.physics.fixture:setSensor(true)
 
-        return instance
+        function instance:beginContact()
+
+        end
+
+        table.insert(self.balls, instance)
     end
 end
 
 
 function Cannon:update(dt)
-    self:selection()
+    self:selection(dt)
     self:updateBalls()
+    print(#self.balls)
 end
 
 
 function Cannon:draw()
     love.graphics.setColor(0, 0, 0)
     for i,ball in ipairs(self.balls) do
-        love.graphics.circle("fill", ball.x - self.ballRadius, ball.y - self.ballRadius, self.ballRadius)
+        love.graphics.circle("fill", ball.x, ball.y, self.ballRadius)
     end
 end
 
 
-function Cannon:selection()
+function Cannon:selection(dt)
     local chance = math.random(self.fireChance)
 
     if chance == self.fireChance then
@@ -56,7 +62,7 @@ function Cannon:selection()
         local height = math.random(0, MapHeight - self.ballRadius*2)
         local speed = math.random(self.ballMinSpeed, self.ballMaxSpeed)
 
-        table.insert(self.balls, Cannonball.new(side, height, speed))
+        Cannonball.new(side, height, speed)
     end
 end
 
@@ -65,5 +71,9 @@ function Cannon:updateBalls()
     for i,ball in ipairs(self.balls) do
         ball.x, ball.y = ball.physics.body:getPosition()
         ball.physics.body:setLinearVelocity(ball.speed, 0)
+
+        if ball.speed > 0 and ball.x > MapWidth then
+            ball.toBeRemoved = true
+        end
     end
 end
