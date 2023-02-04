@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="32" height="18" tilewidth="25" tileheight="25" infinite="0" nextlayerid="3" nextobjectid="29">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="32" height="18" tilewidth="25" tileheight="25" infinite="0" nextlayerid="4" nextobjectid="33">
  <editorsettings>
   <export target="map.lua" format="lua"/>
  </editorsettings>
@@ -18,7 +18,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,2,2,2,2,2,0,0,0,0,0,1,1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -52,11 +52,6 @@
     <property name="collidable" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="25" x="375" y="0" width="50" height="275">
-   <properties>
-    <property name="collidable" type="bool" value="true"/>
-   </properties>
-  </object>
   <object id="26" x="0" y="425" width="800" height="25">
    <properties>
     <property name="collidable" type="bool" value="true"/>
@@ -70,6 +65,31 @@
   <object id="28" x="725" y="350" width="75" height="75">
    <properties>
     <property name="collidable" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="32" x="375" y="0" width="50" height="250">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup color="#00ffff" id="3" name="platform">
+  <properties>
+   <property name="platform" type="bool" value="true"/>
+  </properties>
+  <object id="29" x="275" y="350" width="250" height="25">
+   <properties>
+    <property name="platform" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="30" x="125" y="225" width="125" height="25">
+   <properties>
+    <property name="platform" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="31" x="550" y="225" width="125" height="25">
+   <properties>
+    <property name="platform" type="bool" value="true"/>
    </properties>
   </object>
  </objectgroup>

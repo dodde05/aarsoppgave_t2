@@ -1,5 +1,4 @@
 local STI = require("sti")
-local mapFile = require("map.map")
 
 require("time")
 require("player")
@@ -12,8 +11,9 @@ function love.load()
     World:setCallbacks(BeginContact, EndContact)
     Map:box2d_init(World)
     Map.layers.solid.visible = false
-    MapWidth = mapFile.layers[2].objects[1].width
-    MapHeight = mapFile.layers[2].objects[2].height
+    Map.layers.platform.visible = false
+    MapWidth = Map.width * Map.tilewidth
+    MapHeight = Map.height * Map.tileheight
 
     love.graphics.setBackgroundColor(0/255, 191/255, 255/255) -- Deep sky blue
 

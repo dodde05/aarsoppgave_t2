@@ -12,7 +12,7 @@ function Player:load()
     self.friction = 3500
     self.grounded = false
     self.gravity = 3600
-    self.jumpForce = -950
+    self.jumpForce = 1000
 
     self.physics = {}
     self.physics.body = love.physics.newBody(World, self.x, self.y, "dynamic")
@@ -100,7 +100,7 @@ end
 
 function Player:jump()
     if love.keyboard.isDown("space") and self.grounded then
-        self.yVel = self.jumpForce
+        self.yVel = -self.jumpForce
     end
 end
 

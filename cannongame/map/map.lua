@@ -9,8 +9,8 @@ return {
   height = 18,
   tilewidth = 25,
   tileheight = 25,
-  nextlayerid = 3,
-  nextobjectid = 29,
+  nextlayerid = 4,
+  nextobjectid = 33,
   properties = {},
   tilesets = {
     {
@@ -72,7 +72,7 @@ return {
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -159,21 +159,6 @@ return {
           }
         },
         {
-          id = 25,
-          name = "",
-          class = "",
-          shape = "rectangle",
-          x = 375,
-          y = 0,
-          width = 50,
-          height = 275,
-          rotation = 0,
-          visible = true,
-          properties = {
-            ["collidable"] = true
-          }
-        },
-        {
           id = 26,
           name = "",
           class = "",
@@ -216,6 +201,84 @@ return {
           visible = true,
           properties = {
             ["collidable"] = true
+          }
+        },
+        {
+          id = 32,
+          name = "",
+          class = "",
+          shape = "rectangle",
+          x = 375,
+          y = 0,
+          width = 50,
+          height = 250,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["collidable"] = true
+          }
+        }
+      }
+    },
+    {
+      type = "objectgroup",
+      draworder = "topdown",
+      id = 3,
+      name = "platform",
+      class = "",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      parallaxx = 1,
+      parallaxy = 1,
+      properties = {
+        ["platform"] = true
+      },
+      objects = {
+        {
+          id = 29,
+          name = "",
+          class = "",
+          shape = "rectangle",
+          x = 275,
+          y = 350,
+          width = 250,
+          height = 25,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["platform"] = true
+          }
+        },
+        {
+          id = 30,
+          name = "",
+          class = "",
+          shape = "rectangle",
+          x = 125,
+          y = 225,
+          width = 125,
+          height = 25,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["platform"] = true
+          }
+        },
+        {
+          id = 31,
+          name = "",
+          class = "",
+          shape = "rectangle",
+          x = 550,
+          y = 225,
+          width = 125,
+          height = 25,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["platform"] = true
           }
         }
       }
