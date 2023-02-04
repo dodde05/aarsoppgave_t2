@@ -31,7 +31,7 @@ end
 
 
 function Player:draw()
-    love.graphics.setColor(1, 1, 0)
+    love.graphics.setColor(255/255, 255/255, 0/255)
     love.graphics.rectangle("fill", self.x - self.width / 2, self.y - self.height / 2, self.width, self.height)
 end
 

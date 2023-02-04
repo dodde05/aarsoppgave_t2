@@ -19,7 +19,7 @@ function love.load()
     love.graphics.setBackgroundColor(0/255, 191/255, 255/255) -- Deep sky blue
 
     Player:load()
-    -- Cannon:load()
+    Cannon:load()
     GUI:load()
 end
 
@@ -27,15 +27,17 @@ end
 function love.update(dt)
     World:update(dt)
     Player:update(dt)
-    -- Cannon:update(dt, MapWidth, MapHeight)
+    Cannon:update(dt)
     GUI:update()
     UpdateTimer(dt)
 end
 
 
 function love.draw()
+    love.graphics.setColor(1, 1, 1)
     Map:draw(0, 0, 1, 1)
     Player:draw()
+    Cannon:draw()
     GUI:draw(Time)
 end
 
