@@ -1,12 +1,12 @@
-require("map")
-require("time")
-require("player")
-require("cannonball")
+local Space = require("space")
+local Time = require("time")
+local Player = require("player")
+local Cannonball = require("cannonball")
 
 
 function love.load()
     love.graphics.setBackgroundColor(0/255, 191/255, 255/255) -- Deep sky blue
-    Map:load()
+    Space:load()
     Time:load()
     Player:load()
     Cannonball:load()
@@ -36,8 +36,8 @@ end
 
 
 function BeginContact(a, b, collision)
-    Cannonball:beginContact(a, b, collision)
-    Player:beginContact(a, b, collision)
+    Cannonball:beginContact(a, b, collision, Player.physics.fixture)
+    Player:beginContact(a, b, collision, Space)
 end
 
 function EndContact(a, b, collision)

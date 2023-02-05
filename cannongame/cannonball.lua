@@ -1,4 +1,4 @@
-Cannonball = {}
+local Cannonball = {}
 Cannonball.__index = Cannonball
 
 function Cannonball:new(side, height, speed)
@@ -82,13 +82,16 @@ function Cannonball:deleteBalls()
 end
 
 
-function Cannonball:beginContact(a, b, collision)
+function Cannonball:beginContact(a, b, collision, playerFixture)
     for i,instance in ipairs(self.balls) do
         if a == instance.physics.fixture or b == instance.physics.fixture then
-            if a == Player.physics.fixture or b == Player.physics.fixture then
+            if a == playerFixture or b == playerFixture then
                 -- love.event.quit()
                 print("loss")
             end
         end
     end
 end
+
+
+return Cannonball

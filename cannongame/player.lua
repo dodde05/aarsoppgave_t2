@@ -1,4 +1,4 @@
-Player = {}
+local Player = {}
 
 function Player:load()
     self.width = 20
@@ -11,6 +11,7 @@ function Player:load()
     self.acceleration = 3700
     self.friction = 3500
     self.grounded = false
+    self.platformed = false
     self.gravity = 3600
     self.jumpForce = 1000
 
@@ -92,7 +93,7 @@ end
 
 
 function Player:applyGravity(dt)
-    if not self.grounded then
+    if (not self.grounded) and (not self.platformed) then
         self.yVel = self.yVel + self.gravity * dt
     end
 end
@@ -105,24 +106,43 @@ function Player:jump()
 end
 
 
-function Player:beginContact(a, b, collision)
+function Player:beginContact(a, b, collision, Space)
     local nx, ny = collision:getNormal()
 
-    -- self:platformCollision(a, b, collision, nx, ny)
-    self:groundCollision(a, b, collision, nx, ny)
-    self:topCollision(a, b, nx, ny)
+    if a == self.physics.fixture or b == self.physics.fixture then
+        if self:platformCollision(a, b, collision, nx, ny, Space) then return end
+        self:groundCollision(a, b, collision, nx, ny)
+        self:topCollision(a, b, nx, ny, Space)
+    end
 end
 
 function Player:endContact(a, b, collision)
     if a == self.physics.fixture or b == self.physics.fixture then
-        if self.currentGroundCollision == collision then
+        if self.currentBottomCollision == collision then
             self.grounded = false
+            self.platformed = false
         end
     end
 end
 
 
-function Player:platformCollision(a, b, collision, nx, ny)
+function Player:platformCollision(a, b, collision, nx, ny, Space)
+    if Space:platformCheck(a) or Space:platformCheck(b) then
+        if self.platformed then return end
+
+        if a == self.physics.fixture then
+            if ny > 0 then
+                self:land(collision, "platform")
+            end
+        elseif b == self.physics.fixture then
+            if ny < 0 then
+                self:land(collision, "platform")
+            end
+        end
+    end
+end
+
+function Player:dropOff()
     
 end
 
@@ -132,23 +152,31 @@ function Player:groundCollision(a, b, collision, nx, ny)
 
     if a == self.physics.fixture then
         if ny > 0 then
-            self:land(collision)
+            self:land(collision, "ground")
         end
     elseif b == self.physics.fixture then
         if ny < 0 then
-            self:land(collision)
+            self:land(collision, "ground")
         end
     end
 end
 
-function Player:land(collision)
-    self.currentGroundCollision = collision
-    self.grounded = true
+function Player:land(collision, surface)
+    self.currentBottomCollision = collision
     self.yVel = 0
+    if surface == "ground" then
+        self.grounded = true
+    elseif surface == "platform" then
+        self.platformed = true
+    end
 end
 
 
-function Player:topCollision(a, b, nx, ny)
+function Player:topCollision(a, b, nx, ny, Space)
+    if Space:platformCheck(a) or Space:platformCheck(b) then
+        return
+    end
+
     if a == self.physics.fixture then
         if ny < 0 then
             self.yVel = 0
@@ -159,3 +187,6 @@ function Player:topCollision(a, b, nx, ny)
         end
     end
 end
+
+
+return Player
