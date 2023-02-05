@@ -15,6 +15,9 @@ function love.load()
     MapWidth = Map.width * Map.tilewidth
     MapHeight = Map.height * Map.tileheight
     print(Map.layers.platform.properties.platform)
+    for i,v in ipairs(Map.layers.platform.objects) do
+        print(v)
+    end
 
     love.graphics.setBackgroundColor(0/255, 191/255, 255/255) -- Deep sky blue
 
