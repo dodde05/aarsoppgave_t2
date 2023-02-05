@@ -1,26 +1,12 @@
-local STI = require("sti")
-
+require("map")
 require("time")
 require("player")
 require("cannonball")
 
 
 function love.load()
-    Map = STI("map/map.lua", {"box2d"})
-    World = love.physics.newWorld(0, 0)
-    World:setCallbacks(BeginContact, EndContact)
-    Map:box2d_init(World)
-    Map.layers.solid.visible = false
-    Map.layers.platform.visible = false
-    MapWidth = Map.width * Map.tilewidth
-    MapHeight = Map.height * Map.tileheight
-    print(Map.layers.platform.properties.platform)
-    for i,v in ipairs(Map.layers.platform.objects) do
-        print(v)
-    end
-
     love.graphics.setBackgroundColor(0/255, 191/255, 255/255) -- Deep sky blue
-
+    Map:load()
     Time:load()
     Player:load()
     Cannonball:load()
