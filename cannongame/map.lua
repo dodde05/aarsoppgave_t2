@@ -27,3 +27,8 @@ function Map:makePlatforms()
         table.insert(self.platforms, instance)
     end
 end
+
+
+function Map:platformCheck()
+    
+end

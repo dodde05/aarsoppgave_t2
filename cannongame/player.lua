@@ -105,16 +105,10 @@ function Player:jump()
 end
 
 
-function Player:land(collision)
-    self.currentGroundCollision = collision
-    self.grounded = true
-    self.yVel = 0
-end
-
-
 function Player:beginContact(a, b, collision)
     local nx, ny = collision:getNormal()
 
+    -- self:platformCollision(a, b, collision, nx, ny)
     self:groundCollision(a, b, collision, nx, ny)
     self:topCollision(a, b, nx, ny)
 end
@@ -125,6 +119,11 @@ function Player:endContact(a, b, collision)
             self.grounded = false
         end
     end
+end
+
+
+function Player:platformCollision(a, b, collision, nx, ny)
+    
 end
 
 
@@ -140,6 +139,12 @@ function Player:groundCollision(a, b, collision, nx, ny)
             self:land(collision)
         end
     end
+end
+
+function Player:land(collision)
+    self.currentGroundCollision = collision
+    self.grounded = true
+    self.yVel = 0
 end
 
 
