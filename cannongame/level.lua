@@ -1,8 +1,8 @@
 local STI = require("sti")
 
-local Space = {}
+local Level = {}
 
-function Space:load()
+function Level:load()
     Map = STI("map/map.lua", {"box2d"})
     World = love.physics.newWorld(0, 0)
     World:setCallbacks(BeginContact, EndContact)
@@ -15,29 +15,32 @@ function Space:load()
     MapHeight = Map.height * Map.tileheight
 end
 
-function Space:makePlatforms()
+function Level:makePlatforms()
     self.platforms = {}
     for i,v in ipairs(Map.layers.platform.objects) do
         local instance = {}
 
-        instance.body = love.physics.newBody(World, v.x + v.width/2, v.y + v.height/2, "static")
-        instance.shape = love.physics.newRectangleShape(v.width, v.height)
-        instance.fixture = love.physics.newFixture(instance.body, instance.shape)
-        instance.fixture:setSensor(true)
+        instance.x = v.x
+        instance.y = v.y
+
+        instance.physics = {}
+        instance.physics.body = love.physics.newBody(World, v.x + v.width/2, v.y + v.height/2, "static")
+        instance.physics.shape = love.physics.newRectangleShape(v.width, v.height)
+        instance.physics.fixture = love.physics.newFixture(instance.physics.body, instance.physics.shape)
 
         table.insert(self.platforms, instance)
     end
 end
 
 
-function Space:platformCheck(fixture)
+function Level:platformCheck(fixture)
     for i,instance in ipairs(self.platforms) do
-        if instance.fixture == fixture then
-            return true
+        if instance.physics.fixture == fixture then
+            return true, instance
         end
     end
     return false
 end
 
 
-return Space
+return Level

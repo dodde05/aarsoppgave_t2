@@ -14,6 +14,7 @@ function Player:load()
     self.platformed = false
     self.gravity = 3600
     self.jumpForce = 1000
+    self.collidingPlatform = nil
 
     self.physics = {}
     self.physics.body = love.physics.newBody(World, self.x, self.y, "dynamic")
@@ -100,24 +101,28 @@ end
 
 
 function Player:jump()
-    if love.keyboard.isDown("space") and self.grounded then
+    if love.keyboard.isDown("space") and (self.grounded or self.platformed) then
         self.yVel = -self.jumpForce
     end
 end
 
 
-function Player:beginContact(a, b, collision, Space)
+function Player:beginContact(a, b, collision, Level)
     local nx, ny = collision:getNormal()
 
     if a == self.physics.fixture or b == self.physics.fixture then
-        if self:platformCollision(a, b, collision, nx, ny, Space) then return end
+        if self:platformCollision(a, b, collision, nx, ny, Level) then return end
         self:groundCollision(a, b, collision, nx, ny)
-        self:topCollision(a, b, nx, ny, Space)
+        self:topCollision(a, b, nx, ny, Level)
     end
 end
 
 function Player:endContact(a, b, collision)
     if a == self.physics.fixture or b == self.physics.fixture then
+        if self.collidingPlatform ~= nil then
+            self.collidingPlatform.physics.fixture:setSensor(false)
+            self.collidingPlatform = nil
+        end
         if self.currentBottomCollision == collision then
             self.grounded = false
             self.platformed = false
@@ -126,20 +131,32 @@ function Player:endContact(a, b, collision)
 end
 
 
-function Player:platformCollision(a, b, collision, nx, ny, Space)
-    if Space:platformCheck(a) or Space:platformCheck(b) then
-        if self.platformed then return end
+function Player:platformCollision(a, b, collision, nx, ny, Level)
+    local isPlatform_a, instance_a = Level:platformCheck(a)
+    local isPlatform_b, instance_b = Level:platformCheck(b)
 
+    if isPlatform_a or isPlatform_b then
+        if self.platformed then return end
+        
         if a == self.physics.fixture then
             if ny > 0 then
                 self:land(collision, "platform")
+                return true
+            elseif ny < 0 or nx ~= 0 then
+                instance_b.physics.fixture:setSensor(true)
             end
         elseif b == self.physics.fixture then
             if ny < 0 then
                 self:land(collision, "platform")
+                return true
+            elseif ny > 0 or nx ~= 0 then
+                instance_a.physics.fixture:setSensor(true)
+                self.collidingPlatform = instance_a
             end
         end
     end
+
+    return false
 end
 
 function Player:dropOff()
@@ -172,8 +189,8 @@ function Player:land(collision, surface)
 end
 
 
-function Player:topCollision(a, b, nx, ny, Space)
-    if Space:platformCheck(a) or Space:platformCheck(b) then
+function Player:topCollision(a, b, nx, ny, Level)
+    if Level:platformCheck(a) or Level:platformCheck(b) then
         return
     end
 

@@ -232,9 +232,7 @@ return {
       offsety = 0,
       parallaxx = 1,
       parallaxy = 1,
-      properties = {
-        ["platform"] = true
-      },
+      properties = {},
       objects = {
         {
           id = 29,
@@ -247,9 +245,7 @@ return {
           height = 25,
           rotation = 0,
           visible = true,
-          properties = {
-            ["platform"] = true
-          }
+          properties = {}
         },
         {
           id = 30,
@@ -262,9 +258,7 @@ return {
           height = 25,
           rotation = 0,
           visible = true,
-          properties = {
-            ["platform"] = true
-          }
+          properties = {}
         },
         {
           id = 31,
@@ -277,9 +271,7 @@ return {
           height = 25,
           rotation = 0,
           visible = true,
-          properties = {
-            ["platform"] = true
-          }
+          properties = {}
         }
       }
     }

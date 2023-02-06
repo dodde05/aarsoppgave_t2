@@ -1,4 +1,4 @@
-local Space = require("space")
+local Level = require("level")
 local Time = require("time")
 local Player = require("player")
 local Cannonball = require("cannonball")
@@ -6,7 +6,7 @@ local Cannonball = require("cannonball")
 
 function love.load()
     love.graphics.setBackgroundColor(0/255, 191/255, 255/255) -- Deep sky blue
-    Space:load()
+    Level:load()
     Time:load()
     Player:load()
     Cannonball:load()
@@ -37,7 +37,7 @@ end
 
 function BeginContact(a, b, collision)
     Cannonball:beginContact(a, b, collision, Player.physics.fixture)
-    Player:beginContact(a, b, collision, Space)
+    Player:beginContact(a, b, collision, Level)
 end
 
 function EndContact(a, b, collision)

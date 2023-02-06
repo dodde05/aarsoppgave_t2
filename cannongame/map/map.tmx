@@ -74,23 +74,8 @@
   </object>
  </objectgroup>
  <objectgroup color="#00ffff" id="3" name="platform">
-  <properties>
-   <property name="platform" type="bool" value="true"/>
-  </properties>
-  <object id="29" x="275" y="350" width="250" height="25">
-   <properties>
-    <property name="platform" type="bool" value="true"/>
-   </properties>
-  </object>
-  <object id="30" x="125" y="225" width="125" height="25">
-   <properties>
-    <property name="platform" type="bool" value="true"/>
-   </properties>
-  </object>
-  <object id="31" x="550" y="225" width="125" height="25">
-   <properties>
-    <property name="platform" type="bool" value="true"/>
-   </properties>
-  </object>
+  <object id="29" x="275" y="350" width="250" height="25"/>
+  <object id="30" x="125" y="225" width="125" height="25"/>
+  <object id="31" x="550" y="225" width="125" height="25"/>
  </objectgroup>
 </map>
