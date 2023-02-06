@@ -88,6 +88,7 @@ function Cannonball:beginContact(a, b, collision, playerFixture)
             if a == playerFixture or b == playerFixture then
                 -- love.event.quit()
                 print("loss")
+                return true
             end
         end
     end

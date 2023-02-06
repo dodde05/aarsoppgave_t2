@@ -36,7 +36,7 @@ end
 
 
 function BeginContact(a, b, collision)
-    Cannonball:beginContact(a, b, collision, Player.physics.fixture)
+    if Cannonball:beginContact(a, b, collision, Player.physics.fixture) then return end
     Player:beginContact(a, b, collision, Level)
 end
 
