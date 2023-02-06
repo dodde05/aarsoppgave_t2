@@ -100,9 +100,14 @@ function Player:applyGravity(dt)
 end
 
 
-function Player:jump()
-    if love.keyboard.isDown("space") and (self.grounded or self.platformed) then
-        self.yVel = -self.jumpForce
+function Player:jump(key)
+    if key == "space" and (self.grounded or self.platformed) then
+        if love.keyboard.isDown("s") and self.platformed then
+            self.collidingPlatform.physics.fixture:setSensor(true)
+            self.platformed = false
+        else
+            self.yVel = -self.jumpForce
+        end
     end
 end
 
@@ -139,6 +144,7 @@ function Player:platformCollision(a, b, collision, nx, ny, Level)
         if self.platformed then return end
         
         if a == self.physics.fixture then
+            self.collidingPlatform = instance_b
             if ny > 0 then
                 self:land(collision, "platform")
                 return true
@@ -146,21 +152,17 @@ function Player:platformCollision(a, b, collision, nx, ny, Level)
                 instance_b.physics.fixture:setSensor(true)
             end
         elseif b == self.physics.fixture then
+            self.collidingPlatform = instance_a
             if ny < 0 then
                 self:land(collision, "platform")
                 return true
             elseif ny > 0 or nx ~= 0 then
                 instance_a.physics.fixture:setSensor(true)
-                self.collidingPlatform = instance_a
             end
         end
     end
 
     return false
-end
-
-function Player:dropOff()
-    
 end
 
 

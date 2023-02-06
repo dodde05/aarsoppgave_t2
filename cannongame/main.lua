@@ -32,6 +32,7 @@ end
 
 function love.keypressed(key) -- Is called when a key is pressed
     QuitGame(key)
+    Player:jump(key)
 end
 
 
