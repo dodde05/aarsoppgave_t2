@@ -29,6 +29,7 @@ function Player:update(dt)
     self:jump()
     self:movement(dt)
     self:applyGravity(dt)
+    print(self.platformed)
 end
 
 
@@ -100,8 +101,8 @@ function Player:applyGravity(dt)
 end
 
 
-function Player:jump(key)
-    if key == "space" and (self.grounded or self.platformed) then
+function Player:jump()
+    if love.keyboard.isDown("space") and (self.grounded or self.platformed) then
         if love.keyboard.isDown("s") and self.platformed then
             self.collidingPlatform.physics.fixture:setSensor(true)
             self.platformed = false
