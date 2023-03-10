@@ -2,9 +2,11 @@ local Level = require("level")
 local Time = require("time")
 local Player = require("player")
 local Cannonball = require("cannonball")
+local End = require("end")
 
 
 function love.load()
+    End:load()
     Level:load()
     Time:load()
     Player:load()
@@ -13,6 +15,11 @@ end
 
 
 function love.update(dt)
+    if End.gameOver then
+        End:uploadScore(Time.timer)
+        return
+    end
+
     World:update(dt)
     Time:update(dt)
     Player:update(dt)
@@ -35,7 +42,11 @@ end
 
 
 function BeginContact(a, b, collision)
-    if Cannonball:beginContact(a, b, collision, Player.physics.fixture) then return end
+    if Cannonball:beginContact(a, b, collision, Player.physics.fixture) then
+        End.gameOver = true
+        return
+    end
+
     Player:beginContact(a, b, collision, Level)
 end
 

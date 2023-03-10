@@ -112,8 +112,6 @@ function Cannonball:beginContact(a, b, collision, playerFixture)
     for i,instance in ipairs(self.balls) do
         if a == instance.physics.fixture or b == instance.physics.fixture then
             if a == playerFixture or b == playerFixture then
-                -- love.event.quit()
-                -- print("loss")
                 return true
             end
         end
