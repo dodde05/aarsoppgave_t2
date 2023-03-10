@@ -5,7 +5,6 @@ local Cannonball = require("cannonball")
 
 
 function love.load()
-    love.graphics.setBackgroundColor(0/255, 191/255, 255/255) -- Deep sky blue
     Level:load()
     Time:load()
     Player:load()
@@ -24,7 +23,7 @@ end
 function love.draw()
     love.graphics.setColor(1, 1, 1)
     Map:draw(0, 0, 1, 1)
-    Time:draw()
+    Time:draw(Cannonball.difficulty)
     Player:draw()
     Cannonball:draw()
 end
@@ -32,7 +31,6 @@ end
 
 function love.keypressed(key) -- Is called when a key is pressed
     QuitGame(key)
-    -- Player:jump(key)
 end
 
 
@@ -42,6 +40,7 @@ function BeginContact(a, b, collision)
 end
 
 function EndContact(a, b, collision)
+    if Cannonball:endContact(a, b) then return end
     Player:endContact(a, b, collision)
 end
 

@@ -14,7 +14,6 @@ function Player:load()
     self.platformed = false
     self.gravity = 3600
     self.jumpForce = 1000
-    self.collidingPlatform = nil
 
     self.physics = {}
     self.physics.body = love.physics.newBody(World, self.x, self.y, "dynamic")
@@ -29,7 +28,6 @@ function Player:update(dt)
     self:jump()
     self:movement(dt)
     self:applyGravity(dt)
-    print(self.platformed)
 end
 
 
@@ -128,10 +126,11 @@ function Player:endContact(a, b, collision)
         if self.collidingPlatform ~= nil then
             self.collidingPlatform.physics.fixture:setSensor(false)
             self.collidingPlatform = nil
-        end
-        if self.currentBottomCollision == collision then
-            self.grounded = false
+
             self.platformed = false
+        end
+        if self.currentTerrainCollision == collision then
+            self.grounded = false
         end
     end
 end
@@ -143,11 +142,12 @@ function Player:platformCollision(a, b, collision, nx, ny, Level)
 
     if isPlatform_a or isPlatform_b then
         if self.platformed then return end
+        self.currentTerrainCollision = collision
         
         if a == self.physics.fixture then
             self.collidingPlatform = instance_b
             if ny > 0 then
-                self:land(collision, "platform")
+                self:land("platform")
                 return true
             elseif ny < 0 or nx ~= 0 then
                 instance_b.physics.fixture:setSensor(true)
@@ -155,7 +155,7 @@ function Player:platformCollision(a, b, collision, nx, ny, Level)
         elseif b == self.physics.fixture then
             self.collidingPlatform = instance_a
             if ny < 0 then
-                self:land(collision, "platform")
+                self:land("platform")
                 return true
             elseif ny > 0 or nx ~= 0 then
                 instance_a.physics.fixture:setSensor(true)
@@ -169,20 +169,20 @@ end
 
 function Player:groundCollision(a, b, collision, nx, ny)
     if self.grounded then return end
-
+    self.currentTerrainCollision = collision
+    
     if a == self.physics.fixture then
         if ny > 0 then
-            self:land(collision, "ground")
+            self:land("ground")
         end
     elseif b == self.physics.fixture then
         if ny < 0 then
-            self:land(collision, "ground")
+            self:land("ground")
         end
     end
 end
 
-function Player:land(collision, surface)
-    self.currentBottomCollision = collision
+function Player:land(surface)
     self.yVel = 0
     if surface == "ground" then
         self.grounded = true
@@ -193,9 +193,7 @@ end
 
 
 function Player:topCollision(a, b, nx, ny, Level)
-    if Level:platformCheck(a) or Level:platformCheck(b) then
-        return
-    end
+    if Level:platformCheck(a) or Level:platformCheck(b) then return end
 
     if a == self.physics.fixture then
         if ny < 0 then

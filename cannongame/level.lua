@@ -3,6 +3,8 @@ local STI = require("sti")
 local Level = {}
 
 function Level:load()
+    love.graphics.setBackgroundColor(0/255, 191/255, 255/255) -- Deep sky blue
+    
     Map = STI("map/map.lua", {"box2d"})
     World = love.physics.newWorld(0, 0)
     World:setCallbacks(BeginContact, EndContact)

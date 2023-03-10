@@ -26,7 +26,8 @@ end
 
 function Cannonball:load()
     self.balls = {}
-    self.fireChance = 500
+    self.difficulty = 0
+    self.difficultyTimer = 0
     self.radius = 25 / 2
     self.diameter = self.radius * 2
     self.minSpeed = 400
@@ -35,7 +36,8 @@ end
 
 
 function Cannonball:update(dt)
-    self:selection(dt)
+    self:updateDifficulty(dt)
+    self:calculateFiring()
     self:updateBalls()
     self:deleteBalls()
 end
@@ -49,14 +51,38 @@ function Cannonball:draw()
 end
 
 
-function Cannonball:selection(dt)
-    if math.random(self.fireChance) == self.fireChance then
+function Cannonball:updateDifficulty(dt)
+    if self.difficulty >= 100 then return end
+
+    self.difficultyTimer = self.difficultyTimer + dt
+    if self.difficultyTimer > 2 then
+        self.difficulty = self.difficulty + 1
+        self.difficultyTimer = 0
+    end
+end
+
+
+function Cannonball:calculateFiring()
+    local fireChance = self:calculateFireChance(self.difficulty)
+
+    if math.random(fireChance) == fireChance then
         local side = math.random(2)
         local height = math.random(0, MapHeight - self.diameter)
         local speed = math.random(self.minSpeed, self.maxSpeed)
-
+        
         self:new(side, height, speed)
     end
+end
+
+
+function Cannonball:calculateFireChance(difficulty)
+    if difficulty < 0 then
+        difficulty = 0
+    elseif difficulty > 100 then
+        difficulty = 100
+    end
+
+    return -(11/2)*difficulty + 600
 end
 
 
@@ -87,9 +113,19 @@ function Cannonball:beginContact(a, b, collision, playerFixture)
         if a == instance.physics.fixture or b == instance.physics.fixture then
             if a == playerFixture or b == playerFixture then
                 -- love.event.quit()
-                print("loss")
+                -- print("loss")
                 return true
             end
+        end
+    end
+end
+
+function Cannonball:endContact(a, b)
+    for i,instance in ipairs(self.balls) do
+        if a == instance.physics.fixture or b == instance.physics.fixture then
+            return true
+        else
+            return false
         end
     end
 end
