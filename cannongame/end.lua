@@ -8,12 +8,15 @@ local End = {}
 
 function End:load()
     self.gameOver = false
+    self.scoreFlag = false
 end
 
 
 function End:uploadScore(time)
+    if self.scoreFlag then return end
+
     -- The URL you want to send the POST request to
-    local url = "localhost:80"
+    local url = "http://localhost/index.php"
     
     -- The JSON payload you want to send
     local payload = {
@@ -26,8 +29,10 @@ function End:uploadScore(time)
     -- Set the headers for the POST request
     local headers = {
         ["Content-Type"] = "application/json",
+        ["Transfer-Encoding"] = "chunked",
         ["Content-Length"] = #payload_json
     }
+    
     
     -- Send the POST request
     local response_body = {}
@@ -42,6 +47,7 @@ function End:uploadScore(time)
     -- Print the response body and status code
     print(table.concat(response_body))
     print(status_code)
+    self.scoreFlag = true
 end
 
 

@@ -55,7 +55,7 @@ function Cannonball:updateDifficulty(dt)
     if self.difficulty >= 100 then return end
 
     self.difficultyTimer = self.difficultyTimer + dt
-    if self.difficultyTimer > 2 then
+    if self.difficultyTimer >= 2 then
         self.difficulty = self.difficulty + 1
         self.difficultyTimer = 0
     end

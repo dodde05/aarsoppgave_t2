@@ -4,6 +4,7 @@ local Player = require("player")
 local Cannonball = require("cannonball")
 local End = require("end")
 
+math.randomseed(os.time())
 
 function love.load()
     End:load()

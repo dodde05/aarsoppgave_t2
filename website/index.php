@@ -8,6 +8,19 @@
         <title>Leaderboard</title>
     </head>
     <body>
+        <?php
+                        // Get the JSON data from the request body
+                        $json_data = file_get_contents('php://input');
+
+                        // Decode the JSON data into a PHP array
+                        $data = json_decode($json_data, true);
+        
+                        // Access the two variables in the PHP array
+                        $score = $data['score'];
+        
+                        // Use the variables as needed in your PHP code
+                        echo $score
+        ?>
         <h1>Leaderboards</h1>
 
         <table>
