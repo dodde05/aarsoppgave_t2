@@ -4,9 +4,10 @@ local Player = require("player")
 local Cannonball = require("cannonball")
 local End = require("end")
 
-math.randomseed(os.time())
 
 function love.load()
+    math.randomseed(os.time())
+    
     End:load()
     Level:load()
     Time:load()
@@ -18,7 +19,7 @@ end
 function love.update(dt)
     if End.gameOver then
         End:uploadScore(Time.timer)
-        return
+        love.event.quit()
     end
 
     World:update(dt)

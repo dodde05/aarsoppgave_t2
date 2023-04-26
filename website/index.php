@@ -4,23 +4,11 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="style.css">
+<!--        <link rel="stylesheet" href="style.css">-->
         <title>Leaderboard</title>
     </head>
     <body>
-        <?php
-                        // Get the JSON data from the request body
-                        $json_data = file_get_contents('php://input');
 
-                        // Decode the JSON data into a PHP array
-                        $data = json_decode($json_data, true);
-        
-                        // Access the two variables in the PHP array
-                        $score = $data['score'];
-        
-                        // Use the variables as needed in your PHP code
-                        echo $score
-        ?>
         <h1>Leaderboards</h1>
 
         <table>
@@ -33,9 +21,10 @@
             </tr>
             <?php
 
+                // Getting scores from the database
                 $host = "localhost";
-                $user = "client";
-                $password = "79E76w864dcKbja";
+                $user = "admin";
+                $password = "123";
                 $database = "highscores";
 
                 $connect = mysqli_connect($host, $user, $password, $database);
@@ -56,6 +45,23 @@
                         "</tr>";
                         $rank++;
                     }
+                }
+
+                // Uploading new highscores to database
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    // Get the JSON data from the request body
+                    $json_data = file_get_contents('php://input');
+                    var_dump($json_data);
+
+                    // Decode the JSON data into a PHP array
+                    $data = json_decode($json_data, true);
+
+                    // Access the two variables in the PHP array
+                    $score = $data['score'];
+
+                    // Uploading to database
+                    $sql = "INSERT INTO attempt (name, score, date) VALUES ('name', $score, CURDATE())";
+                    mysqli_query($connect, $sql);
                 }
 
             ?>

@@ -12,7 +12,7 @@ function End:load()
 end
 
 
-function End:uploadScore(time)
+function End:uploadScore(timer)
     if self.scoreFlag then return end
 
     -- The URL you want to send the POST request to
@@ -20,7 +20,7 @@ function End:uploadScore(time)
     
     -- The JSON payload you want to send
     local payload = {
-        score = time
+        score = timer
     }
     
     -- Encode the payload as a JSON string
@@ -29,7 +29,6 @@ function End:uploadScore(time)
     -- Set the headers for the POST request
     local headers = {
         ["Content-Type"] = "application/json",
-        ["Transfer-Encoding"] = "chunked",
         ["Content-Length"] = #payload_json
     }
     
@@ -43,6 +42,12 @@ function End:uploadScore(time)
         source = ltn12.source.string(payload_json),
         sink = ltn12.sink.table(response_body)
     }
+
+    -- Check for errors in the HTTP request
+    if not result then
+        print("HTTP request failed:", status_code)
+        return
+    end
     
     -- Print the response body and status code
     print(table.concat(response_body))
