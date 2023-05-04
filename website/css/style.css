@@ -1,0 +1,26 @@
+#root {
+    width: 90vw;
+    margin: auto;
+}
+
+#header nav {
+    display: flex;
+    justify-content: flex-end;
+}
+
+#leaderboard {
+    display: flex;
+    justify-content: space-between;
+}
+
+#leaderboard div {
+    flex-basis: 0;
+}
+
+#leaderboard #users {
+    flex-grow: 4;
+}
+
+#leaderboard #you {
+    flex-grow: 1;
+}

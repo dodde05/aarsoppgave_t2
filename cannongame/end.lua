@@ -16,10 +16,11 @@ function End:uploadScore(timer)
     if self.scoreFlag then return end
 
     -- The URL you want to send the POST request to
-    local url = "http://localhost/index.php"
+    local url = "http://localhost/gameBackend/upload.php"
     
     -- The JSON payload you want to send
     local payload = {
+        name = "jon",
         score = timer
     }
     
@@ -45,7 +46,7 @@ function End:uploadScore(timer)
 
     -- Check for errors in the HTTP request
     if not result then
-        print("HTTP request failed:", status_code)
+        print("Server error:", status_code)
         return
     end
     

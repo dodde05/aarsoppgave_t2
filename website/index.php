@@ -1,72 +1,138 @@
+<?php
+    include "includes/connect.inc.php";
+
+
+    if (!isset($_SESSION)) {
+        session_start();
+    }
+
+    $userLoggedIn = isset($_SESSION['id']);
+    $userHasScore = isset($_SESSION['score']);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!--        <link rel="stylesheet" href="style.css">-->
+        <link rel="stylesheet" href="css/style.css">
         <title>Leaderboard</title>
     </head>
     <body>
+        
+        <div id="root">
 
-        <h1>Leaderboards</h1>
+            <div id="header">
+                <nav>
+                    <a href="download.php">Game download</a>
 
-        <table>
+                    <?php
+                        if (!$userLoggedIn) {
 
-            <tr>
-                <th>Rank</th>
-                <th>Name</th>
-                <th>Score</th>
-                <th>Date</th>
-            </tr>
-            <?php
+                            echo 
+                            "<a href='login.php'>Sign in</a>
+                            <a href='signup.php'>Sign up</a>";
 
-                // Getting scores from the database
-                $host = "localhost";
-                $user = "admin";
-                $password = "123";
-                $database = "highscores";
+                        } else {
 
-                $connect = mysqli_connect($host, $user, $password, $database);
+                            echo 
+                            "<form action='redirects/logout.redir.php' method='post'>
+                                <button type='submit' name='logoutButton' id='logoutButton'>Sign out</button>
+                            </form>";
 
-                $sql = "SELECT id, name, score, DATE_FORMAT(date, '%d.%m.%Y') date FROM attempt ORDER BY score DESC;";
+                        }
+                    ?>
+                </nav>
+            </div>
+            
+            <div id="leaderboard">
 
-                $result = mysqli_query($connect, $sql);
-                $numberOfResults = mysqli_num_rows($result);
+                <div id="users">
 
-                if ($numberOfResults > 0) {
-                    $rank = 1;
-                    while($row = mysqli_fetch_assoc($result)){
-                        echo "<tr>" .
-                        "<td>" . $rank . "." . "</td>" .
-                        "<td>" . $row["name"] . "</td>" .
-                        "<td>" . $row["score"] . "</td>" .
-                        "<td>" . $row["date"] . "</td>" .
-                        "</tr>";
-                        $rank++;
-                    }
-                }
+                    <h1>Leaderboards</h1>
 
-                // Uploading new highscores to database
-                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    // Get the JSON data from the request body
-                    $json_data = file_get_contents('php://input');
-                    var_dump($json_data);
+                    <table>
 
-                    // Decode the JSON data into a PHP array
-                    $data = json_decode($json_data, true);
+                        <tr>
+                            <th>Rank</th>
+                            <th>Name</th>
+                            <th>Score</th>
+                            <th>Date</th>
+                        </tr>
+                        <?php
 
-                    // Access the two variables in the PHP array
-                    $score = $data['score'];
+                            $sql = "SELECT id, user, score, DATE_FORMAT(date, '%d.%m.%Y') date FROM attempt WHERE score IS NOT NULL ORDER BY score DESC;";
+                            $result = mysqli_query($connect, $sql);
+                            $numberOfResults = mysqli_num_rows($result);
 
-                    // Uploading to database
-                    $sql = "INSERT INTO attempt (name, score, date) VALUES ('name', $score, CURDATE())";
-                    mysqli_query($connect, $sql);
-                }
+                            if ($numberOfResults > 0) {
 
-            ?>
+                                $rank = 1;
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    echo 
+                                    "<tr>" .
+                                        "<td>" . $rank . "." . "</td>" .
+                                        "<td>" . $row["user"] . "</td>" .
+                                        "<td>" . $row["score"] . "</td>" .
+                                        "<td>" . $row["date"] . "</td>" .
+                                    "</tr>";
 
-        </table>
+                                    if ($userHasScore) {
+
+                                        if ($row["id"] === $_SESSION["id"]) {
+                                            $_SESSION["rank"] = $rank;
+                                        }
+
+                                    }
+
+                                    $rank++;
+                                    
+                                }
+                            }
+
+                        ?>
+
+                    </table>
+
+                </div>
+
+                <div id="you">
+
+                    <?php
+                        if ($userHasScore) {
+                            echo "<h3>Your placement:</h3>
+                            <table>
+
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Name</th>
+                                    <th>Score</th>
+                                    <th>Date</th>
+                                </tr>
+
+                                <tr>
+                                    <td>" . $_SESSION["rank"] . "." . "</td>
+                                    <td>" . $_SESSION["user"] . "</td>
+                                    <td>" . $_SESSION["score"] . "</td>
+                                    <td>" . $_SESSION["date"] . "</td>
+                                </tr>
+
+                            </table>";
+
+                        } elseif ($userLoggedIn) {
+
+                            echo "<h3>Your placement:</h3>
+                            <p>No score yet</p>";
+
+                        }
+                    ?>
+
+                </div>
+
+            </div>
+
+        </div>
 
     </body>
 </html>
