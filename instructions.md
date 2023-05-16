@@ -1,7 +1,7 @@
 # User instructions
 
 ## Game download
-1. Go to http://10.0.0.22
+1. Go to http://10.0.0.2
 2. Click on the "Game download" link in the top navigation bar
 3. Click the download button
 4. Unzip the downloaded zip and place the unzipped folder anywhere you'd like

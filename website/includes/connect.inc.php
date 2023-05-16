@@ -1,7 +1,7 @@
 <?php
     $host = "localhost";
-    $user = "admin";
-    $password = "123";
+    $user = "scoreclient";
+    $password = "Uuude7J2xE4wjV";
     $database = "highscores";
 
     $connect = mysqli_connect($host, $user, $password, $database);

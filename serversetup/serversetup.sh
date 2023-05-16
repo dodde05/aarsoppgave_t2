@@ -6,7 +6,7 @@ apt update
 # Basic server setup
 name=$1
 
-echo "Oppsett for bruker $name"
+echo "Setup for user $name"
 adduser $name
 usermod -aG sudo $name
 
@@ -27,6 +27,9 @@ ufw allow 3306
 # Installing phpmyadmin
 apt install php-mbstring php-zip php-gd -y
 
-# Kommandoer med brukerinput
+# Commands with user input
 mysql_secure_installation
 apt install phpmyadmin -y
+
+# Database setup
+mariadb < db_setup.sql

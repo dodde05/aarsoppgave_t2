@@ -11,6 +11,8 @@
         $username = mysqli_real_escape_string($connect, $_POST['newUsername']);
         $password = mysqli_real_escape_string($connect, $_POST['newPassword']);
 
+        $hash = password_hash($password, PASSWORD_DEFAULT);
+
         $sql = "SELECT user FROM attempt WHERE user = '$username';";
         $result = mysqli_query($connect, $sql);
         $numberOfResults = mysqli_num_rows($result);
@@ -21,9 +23,9 @@
 
         } else {
             
-            $sql = "INSERT INTO attempt (user, password) VALUES ('$username', '$password');";
+            $sql = "INSERT INTO attempt (user, password) VALUES ('$username', '$hash');";
             mysqli_query($connect, $sql);
-            echo "hello";
+            
             session_start();
 
             $_SESSION["id"] = mysqli_insert_id($connect);

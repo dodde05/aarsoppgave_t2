@@ -7,7 +7,7 @@ local End = require("end")
 
 function love.load()
     math.randomseed(os.time())
-    
+
     End:load()
     Level:load()
     Time:load()
