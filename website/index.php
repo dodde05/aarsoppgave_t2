@@ -26,6 +26,7 @@
             <div id="header">
                 <nav>
                     <a href="download.php">Game download</a>
+                    <a href="faq.php">FAQ</a>
 
                     <?php
                         if (!$userLoggedIn) {

@@ -16,13 +16,12 @@ apt install openssh-server
 ufw allow OpenSSH
 ufw enable
 
-# Installing LAMP stcak
+# Installing LAMP stack
 apt install apache2 -y
 apt install mariadb-server -y
 apt install php libapache2-mod-php php-mysql -y
 
 ufw allow in "WWW Full"
-ufw allow 3306
 
 # Installing phpmyadmin
 apt install php-mbstring php-zip php-gd -y
