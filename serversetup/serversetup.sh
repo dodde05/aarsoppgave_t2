@@ -32,3 +32,6 @@ apt install phpmyadmin -y
 
 # Database setup
 mariadb < db_setup.sql
+
+# Apache priority reminder
+echo "Remember to change Apaches file priority to PHP (/etc/apache2/mods-enabled/dir.conf)"
