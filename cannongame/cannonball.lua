@@ -9,7 +9,7 @@ function Cannonball:new(side, height, speed)
         instance.speed = speed
     elseif side == 2 then
         instance.x = MapWidth
-        instance.speed = -speed
+        instance.speed = -speed 
     end
     instance.y = height
 

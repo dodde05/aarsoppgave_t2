@@ -20,7 +20,7 @@ function End:uploadScore(timer)
     
     -- The JSON payload you want to send
     local payload = {
-        name = "Martin",
+        name = "eksamen",
         password = "test",
         score = timer
     }
