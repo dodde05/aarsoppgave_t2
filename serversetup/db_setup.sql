@@ -4,7 +4,7 @@ CREATE DATABASE highscores;
 USE highscores;
 
 CREATE TABLE attempt(
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     user VARCHAR(30),
     password VARCHAR(255),
     score DECIMAL(6, 2) DEFAULT NULL,
